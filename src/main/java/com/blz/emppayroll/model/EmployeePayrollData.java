@@ -1,42 +1,38 @@
 package com.blz.emppayroll.model;
 
+import java.time.LocalDate;
+import java.util.List;
+
 import com.blz.emppayroll.dto.EmployeePayrollDTO;
 
-public class EmployeePayrollData {
+import lombok.Data;
+
+public @Data class EmployeePayrollData {
 
 	private int employeeId;
 	private String name;
 	private long salary;
+	private String gender;
+	private LocalDate startDate;
+	private String note;
+	private String profilePic;
+	private List<String> department;
 	
 	public EmployeePayrollData() {}
 	
 	public EmployeePayrollData(int empId, EmployeePayrollDTO empPayrollDTO) {
 		this.employeeId = empId;
+		this.updateEmployeePayrollData(empPayrollDTO);
+	}
+
+	
+	private void updateEmployeePayrollData(EmployeePayrollDTO empPayrollDTO) {
 		this.name = empPayrollDTO.name;
 		this.salary = empPayrollDTO.salary;
-	}
-
-	public int getEmployeeId() {
-		return employeeId;
-	}
-
-	public void setEmployeeId(int employeeId) {
-		this.employeeId = employeeId;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public long getSalary() {
-		return salary;
-	}
-
-	public void setSalary(long salary) {
-		this.salary = salary;
+		this.gender = empPayrollDTO.gender;
+		this.startDate = empPayrollDTO.startDate;
+		this.note = empPayrollDTO.note;
+		this.profilePic = empPayrollDTO.profilePic;
+		this.department = empPayrollDTO.department;
 	}
 }
