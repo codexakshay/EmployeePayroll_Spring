@@ -21,8 +21,11 @@ import com.blz.emppayroll.dto.ResponseDTO;
 import com.blz.emppayroll.model.EmployeePayrollData;
 import com.blz.emppayroll.service.IEmployeePayrollService;
 
+import lombok.extern.slf4j.Slf4j;
+
 @RestController
 @RequestMapping("/employeepayrollservice")
+@Slf4j
 public class EmployeePayrollController {
 	
 	@Autowired
@@ -44,8 +47,17 @@ public class EmployeePayrollController {
 		return new ResponseEntity<ResponseDTO>(respDTO, HttpStatus.OK);
 	}
 	
+	@GetMapping("/department/{department}")
+	public ResponseEntity<ResponseDTO> getEmployeePayrollData(@PathVariable("department") String department) {
+		List<EmployeePayrollData> empDataList = null;
+		empDataList = employeePayrollService.getEmployeesByDepartment(department);
+		ResponseDTO respDTO = new ResponseDTO("Get Call For ID Successful", empDataList);
+		return new ResponseEntity<ResponseDTO>(respDTO, HttpStatus.OK);
+	}
+	
 	@PostMapping("/create")
 	public ResponseEntity<ResponseDTO> createEmployeePayrollData(@Valid @RequestBody EmployeePayrollDTO empPayrollDTO) {
+		log.debug("Employee payroll dto "+empPayrollDTO.toString());
 		EmployeePayrollData empData = null;
 		empData = employeePayrollService.createEmployeePayrollData(empPayrollDTO);
 		ResponseDTO respDTO = new ResponseDTO("Created Employee Payroll Data Successfully", empData);
